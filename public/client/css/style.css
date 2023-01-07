@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    font-family: 'Poppins';
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container-fluid,
+.container {
+    --bs-gutter-x: 0rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    opacity: 0.6;
+}
+
+.navbar {
+    position: relative;
+}
+
+.navbar .active {
+    background-color: rgb(223, 223, 223);
+    border-radius: 10px;
+}
+
+.navbar .logo {
+    width: 100px;
+    height: 50px;
+}
+
+.navbar .nav-item {
+    position: relative;
+}
+
+.navbar .nav-link {
+    font-size: 16px;
+    color: rgb(28, 28, 28);
+    font-family: 'Poppins';
+}
+
+.navbar .nav-link:hover {
+    opacity: 0.6;
+}
+
+.card {
+    padding: 0;
+}
+
+.categories .card-body {
+    padding: 0;
+}
+
+.food .col-3 {
+    padding: 5px;
+}
+
+.food .card {
+    border: none;
+}
+
+.text-purple {
+    color: purple;
+}
+
+.bg-purple {
+    background-color: purple;
+}
+
+.bg-purple:hover {
+    opacity: 0.6 !important;
+}
+
+.food .bg-purple a {
+    font-size: 14px;
+}
+
+.food .action-buttons {
+    visibility: hidden;
+}
+
+.food .card:hover .action-buttons {
+    visibility: visible;
+}
+
+.food .card-body img {
+    height: 280px;
+}
+
+/*.related-products .card img{*/
+/*    height: 280px;*/
+/*}*/
+
+/*.related-products .card:hover {*/
+/*    box-shadow: 0px 0px 10px -5px;*/
+/*    transition: 0.5s all;*/
+/*}*/
+
+.food .card {
+    border: 1px solid rgba(0, 0, 0, 0.0);
+}
+
+.food .card:hover {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.food .card-text a {
+    font-weight: 100;
+}
+
+.card .card-text {
+    line-height: 1.5em;
+}
+
+.review {
+    background-image: url("../img/online-pet-food-delivery.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 650px;
+}
+
+.review .card-img {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    margin-top: -90px;
+    display: block;
+    margin-left: 20px;
+}
+
+.review p {
+    font-size: 16px;
+    line-height: 27px;
+}
+
+.footer p {
+    font-size: 15px;
+    line-height: 27px;
+}
+
+.footer a {
+    display: inline-block;
+    font-size: 14px;
+}
+
+.footer .icon {
+    font-size: 30px;
+    padding: 10px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+/*  */
+.social-share .icon {
+    font-size: 25px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+}
+
+.img-cart {
+    display: block;
+    max-width: 100px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table tr td {
+    border: 1px solid #FFFFFF;
+}
+
+table tr th {
+    background: #eee;
+}
