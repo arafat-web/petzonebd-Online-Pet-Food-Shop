@@ -19,8 +19,11 @@
                 </a>
             </div>
         </div>
-        <a href="{{route('log.out')}}" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
-                class="nav_name">SignOut</span>
-        </a>
+        <form method="POST" action="{{ route('admin.logout') }}" style="display: inline;">
+            @csrf
+            <button type="submit" class="nav_link" style="background: none; border: none; cursor: pointer; width: 100%; text-align: left;"> 
+                <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span>
+            </button>
+        </form>
     </nav>
 </div>

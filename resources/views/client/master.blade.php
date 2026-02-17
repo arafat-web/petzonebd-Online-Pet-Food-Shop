@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PetZoneBD - @yield('title')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{asset('client')}}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{asset('client')}}/css/style.css">
 </head>
 <body>
 
-<div class="container-fluid" @yield('bg-color')>
+<div @yield('bg-color')>
     @include('client.include.header')
     @yield('content')
     @include('client.include.footer')
