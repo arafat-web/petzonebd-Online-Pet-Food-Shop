@@ -6,7 +6,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,10 +21,41 @@ use App\Http\Controllers\LogoutController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 //Client Routing
 Route::get('/', [ClientController::class, 'index'])->name('index');
-Route::get('/product/{cat_id}/{id}', [ClientController::class, 'product'])->name('product');
-Route::get('/products/{id}', [ClientController::class, 'allProduct'])->name('products');
+Route::get('/product/{category}/{product}', [ClientController::class, 'product'])->name('product');
+Route::get('/products/{category}', [ClientController::class, 'allProduct'])->name('products');
+
+// Contact
+Route::get('contact', [ContactController::class, 'show'])->name('contact.show');
+Route::post('contact', [ContactController::class, 'send'])->name('contact.send');
+
+//Client Auth
+Route::middleware('guest')->group(function () {
+    Route::get('login', function() { return view('client.auth.login'); })->name('client.login');
+    Route::post('login', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])->name('login');
+    
+    Route::get('register', function() { return view('client.auth.register'); })->name('client.register');
+    Route::post('register', [\Laravel\Fortify\Http\Controllers\RegisteredUserController::class, 'store'])->name('register');
+});
+
+// Admin Auth
+Route::middleware('guest')->group(function () {
+    Route::get('admin-login', [AdminAuthenticatedSessionController::class, 'create'])->name('admin.login');
+    Route::post('admin-login', [AdminAuthenticatedSessionController::class, 'store'])->name('admin.login.store');
+});
+
+Route::post('logout', [\Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'destroy'])->name('logout');
+Route::post('admin-logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
+
+//User Panel (Authenticated Clients)
+Route::middleware('auth')->group(function () {
+    Route::get('my-dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::post('profile/update', [UserController::class, 'updateProfile'])->name('user.update-profile');
+    Route::get('order/{id}', [UserController::class, 'orderDetails'])->name('user.order-details');
+});
 
 //Cart
 Route::get('cart', [CartController::class, 'cartList'])->name('cart.list');
@@ -29,9 +64,24 @@ Route::post('update-cart', [CartController::class, 'updateCart'])->name('cart.up
 Route::post('remove', [CartController::class, 'removeCart'])->name('cart.remove');
 Route::post('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-//Admin Routing
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+//Checkout
+Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('order/confirmation/{id}', [CheckoutController::class, 'confirmation'])->name('order.confirmation');
+
+// Dashboard redirect based on role
+Route::get('/dashboard', function () {
+    if (auth()->check()) {
+        return auth()->user()->isAdmin() 
+            ? redirect()->route('admin.dashboard') 
+            : redirect()->route('user.dashboard');
+    }
+    return redirect()->route('admin.login');
+})->name('dashboard');
+
+Route::middleware(['auth', 'isadmin'])->group(function () {
+    //Admin Routing
+    Route::get('/admin-dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/manage-categories', [CategoryController::class, 'manageCategory'])->name('manage.categories');
     Route::post('/add-category', [CategoryController::class, 'addCategory'])->name('add.category');
     Route::get('/delete-category/{id}', [CategoryController::class, 'deleteCategory'])->name('delete.category');
@@ -42,6 +92,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('/save-product', [ProductController::class, 'saveProduct'])->name('save.product');
     Route::get('/manage-products', [ProductController::class, 'manageProduct'])->name('manage.products');
     Route::get('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('delete.product');
-    Route::get('/logout', [LogoutController::class, 'logoutUser'])->name('log.out');
-
+    Route::post('/admin-logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });
