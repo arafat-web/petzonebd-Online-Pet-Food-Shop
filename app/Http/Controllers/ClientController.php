@@ -13,40 +13,33 @@ class ClientController extends Controller
     {
 
         return view('client.home.index', [
-            'catfoods' => Product::where('cat_id', 1)
+            'categories' => Category::all(),
+            'catfoods' => Product::with('category')->where('cat_id', 1)
                 ->orderby('id', 'desc')->take(4)->get(),
-            'dogfoods' => Product::where('cat_id', 2)
+            'dogfoods' => Product::with('category')->where('cat_id', 2)
                 ->orderby('id', 'desc')->take(4)->get(),
-            'birdfoods' => Product::where('cat_id', 3)
+            'birdfoods' => Product::with('category')->where('cat_id', 3)
                 ->orderby('id', 'desc')->take(4)->get(),
-            'rabbitfoods' => Product::where('cat_id', 4)
+            'rabbitfoods' => Product::with('category')->where('cat_id', 4)
                 ->orderby('id', 'desc')->take(4)->get(),
-            ''
         ]);
     }
 
-    public function product($cat_id, $id)
+    public function product(Category $category, Product $product)
     {
-        $product = DB::table('products')
-            ->join('categories', 'products.cat_id', '=', 'categories.id')
-            ->select('products.*', 'categories.name as cat_name')
-            ->where('products.id', $id)
-            ->first();
         return view('client.product.product', [
-            'relatedfoods' => Product::where('cat_id', $cat_id)
+            'relatedfoods' => Product::with('category')->where('cat_id', $category->id)
                 ->orderby('id', 'desc')->take(4)->get(),
             'products' => $product,
-
         ]);
     }
 
-    public function allProduct($id)
+    public function allProduct(Category $category)
     {
         return view('client.products.products', [
-            'allfoods' => Product::where('cat_id', $id)
+            'allfoods' => Product::with('category')->where('cat_id', $category->id)
                 ->orderby('id', 'desc')->get(),
-            'cat_name' => Category::where('id', $id)
-            ->first()
+            'cat_name' => $category
         ]);
     }
 }

@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class CartController extends Controller
 {
     public function cartList()
     {
-        $cartItems = \Cart::getContent();
+        $cartItems = Cart::getContent();
         return view('client.cart.cart', compact('cartItems'));
     }
 
     public function addToCart(Request $request)
     {
-        \Cart::add([
+        Cart::add([
             'id' => $request->id,
             'name' => $request->name,
             'price' => $request->price,
@@ -29,7 +30,7 @@ class CartController extends Controller
 
     public function updateCart(Request $request)
     {
-        \Cart::update(
+        Cart::update(
             $request->id,
             [
                 'quantity' => [
@@ -45,14 +46,14 @@ class CartController extends Controller
 
     public function removeCart(Request $request)
     {
-        \Cart::remove($request->id);
+        Cart::remove($request->id);
         session()->flash('cartsuccess', 'Item Cart Remove Successfully!');
         return redirect()->route('cart.list');
     }
 
     public function clearAllCart()
     {
-        \Cart::clear();
+        Cart::clear();
         session()->flash('cartsuccess', 'All Item Cart Clear Successfully !');
         return redirect()->route('cart.list');
     }
