@@ -15,11 +15,22 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
-            $table->integer('quantity');
-            $table->string('trx_id', 50);
-            $table->string('date', 15);
-            $table->integer('user_id');
+            $table->string('order_number')->unique();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->string('customer_name');
+            $table->string('customer_email');
+            $table->string('customer_phone');
+            $table->text('shipping_address');
+            $table->string('shipping_city');
+            $table->string('shipping_postal_code')->nullable();
+            $table->decimal('subtotal', 10, 2);
+            $table->decimal('shipping_cost', 10, 2)->default(0);
+            $table->decimal('tax', 10, 2)->default(0);
+            $table->decimal('total', 10, 2);
+            $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])->default('pending');
+            $table->enum('payment_method', ['cod', 'card', 'bkash', 'nagad'])->nullable();
+            $table->string('transaction_id')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
