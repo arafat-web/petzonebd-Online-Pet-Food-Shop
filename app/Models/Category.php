@@ -10,6 +10,14 @@ class Category extends Model
     private static $category, $image, $imageName, $directory, $imgURL;
     use HasFactory;
 
+    protected $fillable = ['name', 'slug', 'cat_image'];
+
+    // Route model binding with slug
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public static function saveCategory($request){
         self::$category = new Category();
         self::$category->name = $request->cat_name;
@@ -27,3 +35,4 @@ class Category extends Model
         return  self::$imgURL;
     }
 }
+
