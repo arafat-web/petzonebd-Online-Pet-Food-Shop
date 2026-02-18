@@ -42,4 +42,22 @@ class ClientController extends Controller
             'cat_name' => $category
         ]);
     }
-}
+
+    public function search(Request $request)
+    {
+        $query = $request->get('search', '');
+
+        $searchResults = Product::where(function ($q) use ($query) {
+            $q->where('name', 'like', "%{$query}%")
+              ->orWhere('brand', 'like', "%{$query}%")
+              ->orWhere('description', 'like', "%{$query}%");
+        })
+        ->with('category')
+        ->orderby('id', 'desc')
+        ->get();
+
+        return view('client.products.search', [
+            'allfoods' => $searchResults,
+            'search_query' => $query,
+        ]);
+    }}

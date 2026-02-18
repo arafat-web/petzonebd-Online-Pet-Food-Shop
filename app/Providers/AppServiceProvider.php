@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\Models\Category;
 use App\Helpers\ImageHelper;
+use Illuminate\Support\Facades\Cache;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -26,7 +28,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         try {
-            $categories = Category::all();
+            // Cache categories for 24 hours to improve performance
+            // This prevents database queries on every request
+            $categories = Cache::remember('app.categories', 86400, function () {
+                return Category::all();
+            });
             view()->share('categories', $categories);
         } catch (\Exception $e) {
             // Handle case when database tables don't exist yet
@@ -38,3 +44,4 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 }
+

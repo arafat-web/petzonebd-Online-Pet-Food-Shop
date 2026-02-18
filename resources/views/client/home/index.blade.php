@@ -157,7 +157,11 @@
                                 <a href="{{ route('product', [$catfood->category, $catfood]) }}">
                                     <img src="@image($catfood->image)" alt="{{ $catfood->name }}">
                                 </a>
-                                <span class="product-tag">New</span>
+                                @if($catfood->hasDiscount())
+                                    <span class="product-tag" style="background: var(--accent);">-{{ $catfood->getDiscountPercentage() }}%</span>
+                                @else
+                                    <span class="product-tag">New</span>
+                                @endif
                                 <div class="product-wishlist"><i class="bi bi-heart"></i></div>
                             </div>
                             <div class="product-body">
@@ -178,16 +182,20 @@
                                 </div>
                                 <div class="product-footer">
                                     <div>
-                                        <span class="product-price">৳{{ $catfood->price }}</span>
-                                        @if (rand(0, 1))
-                                            <span class="product-price-old">৳{{ $catfood->price + rand(200, 500) }}</span>
+                                        <span class="product-price">৳{{ $catfood->getDisplayPrice() }}</span>
+                                        @if($catfood->hasDiscount())
+                                            <span class="product-price-old">৳{{ $catfood->price }}</span>
+                                        @else
+                                            @if (rand(0, 1))
+                                                <span class="product-price-old">৳{{ $catfood->price + rand(200, 500) }}</span>
+                                            @endif
                                         @endif
                                     </div>
                                     <form action="{{ route('cart.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" value="{{ $catfood->id }}" name="id">
                                         <input type="hidden" value="{{ $catfood->name }}" name="name">
-                                        <input type="hidden" value="{{ $catfood->price }}" name="price">
+                                        <input type="hidden" value="{{ $catfood->getDisplayPrice() }}" name="price">
                                         <input type="hidden" value="@image($catfood->image)" name="image">
                                         <input type="hidden" value="1" name="quantity">
                                         <button type="submit" class="btn-add-cart"><i
@@ -225,7 +233,11 @@
                                 <a href="{{ route('product', [$dogfood->category, $dogfood]) }}">
                                     <img src="@image($dogfood->image)" alt="{{ $dogfood->name }}">
                                 </a>
-                                <span class="product-tag">Bestseller</span>
+                                @if($dogfood->hasDiscount())
+                                    <span class="product-tag" style="background: var(--accent);">-{{ $dogfood->getDiscountPercentage() }}%</span>
+                                @else
+                                    <span class="product-tag">Bestseller</span>
+                                @endif
                                 <div class="product-wishlist"><i class="bi bi-heart"></i></div>
                             </div>
                             <div class="product-body">
@@ -246,13 +258,16 @@
                                 </div>
                                 <div class="product-footer">
                                     <div>
-                                        <span class="product-price">৳{{ $dogfood->price }}</span>
+                                        <span class="product-price">৳{{ $dogfood->getDisplayPrice() }}</span>
+                                        @if($dogfood->hasDiscount())
+                                            <span class="product-price-old">৳{{ $dogfood->price }}</span>
+                                        @endif
                                     </div>
                                     <form action="{{ route('cart.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" value="{{ $dogfood->id }}" name="id">
                                         <input type="hidden" value="{{ $dogfood->name }}" name="name">
-                                        <input type="hidden" value="{{ $dogfood->price }}" name="price">
+                                        <input type="hidden" value="{{ $dogfood->getDisplayPrice() }}" name="price">
                                         <input type="hidden" value="@image($dogfood->image)" name="image">
                                         <input type="hidden" value="1" name="quantity">
                                         <button type="submit" class="btn-add-cart"><i
@@ -299,6 +314,9 @@
                                             <img src="@image($birdfood->image)" alt="{{ $birdfood->name }}"
                                                 style="max-height: 120px;">
                                         </a>
+                                        @if($birdfood->hasDiscount())
+                                            <span class="product-tag" style="background: var(--accent); font-size: 0.65rem;">-{{ $birdfood->getDiscountPercentage() }}%</span>
+                                        @endif
                                         <div class="product-wishlist"><i class="bi bi-heart"></i></div>
                                     </div>
                                     <div class="product-body">
@@ -310,12 +328,15 @@
                                             </a>
                                         </div>
                                         <div class="product-footer">
-                                            <span class="product-price">৳{{ $birdfood->price }}</span>
+                                            <span class="product-price">৳{{ $birdfood->getDisplayPrice() }}</span>
+                                            @if($birdfood->hasDiscount())
+                                                <span class="product-price-old">৳{{ $birdfood->price }}</span>
+                                            @endif
                                             <form action="{{ route('cart.store') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" value="{{ $birdfood->id }}" name="id">
                                                 <input type="hidden" value="{{ $birdfood->name }}" name="name">
-                                                <input type="hidden" value="{{ $birdfood->price }}" name="price">
+                                                <input type="hidden" value="{{ $birdfood->getDisplayPrice() }}" name="price">
                                                 <input type="hidden" value="@image($birdfood->image)" name="image">
                                                 <input type="hidden" value="1" name="quantity">
                                                 <button type="submit" class="btn-add-cart"><i
@@ -354,6 +375,9 @@
                                             <img src="@image($rabbitfood->image)" alt="{{ $rabbitfood->name }}"
                                                 style="max-height: 120px;">
                                         </a>
+                                        @if($rabbitfood->hasDiscount())
+                                            <span class="product-tag" style="background: var(--accent); font-size: 0.65rem;">-{{ $rabbitfood->getDiscountPercentage() }}%</span>
+                                        @endif
                                         <div class="product-wishlist"><i class="bi bi-heart"></i></div>
                                     </div>
                                     <div class="product-body">
@@ -365,12 +389,15 @@
                                             </a>
                                         </div>
                                         <div class="product-footer">
-                                            <span class="product-price">৳{{ $rabbitfood->price }}</span>
+                                            <span class="product-price">৳{{ $rabbitfood->getDisplayPrice() }}</span>
+                                            @if($rabbitfood->hasDiscount())
+                                                <span class="product-price-old">৳{{ $rabbitfood->price }}</span>
+                                            @endif
                                             <form action="{{ route('cart.store') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" value="{{ $rabbitfood->id }}" name="id">
                                                 <input type="hidden" value="{{ $rabbitfood->name }}" name="name">
-                                                <input type="hidden" value="{{ $rabbitfood->price }}" name="price">
+                                                <input type="hidden" value="{{ $rabbitfood->getDisplayPrice() }}" name="price">
                                                 <input type="hidden" value="@image($rabbitfood->image)" name="image">
                                                 <input type="hidden" value="1" name="quantity">
                                                 <button type="submit" class="btn-add-cart"><i

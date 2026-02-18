@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\CategoryCacheService;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
@@ -21,6 +22,7 @@ class CategoryController extends Controller
     public function addCategory(Request $request)
     {
         Category::saveCategory($request);
+        CategoryCacheService::clearCache();
         return back()->with('success', 'Category has been added successfully!');
     }
 
@@ -31,6 +33,7 @@ class CategoryController extends Controller
             unlink($this->category->cat_image);
         }
         $this->category->delete();
+        CategoryCacheService::clearCache();
         return back()->with('success', 'Category has been deleted successfully!');
     }
 
@@ -59,6 +62,7 @@ class CategoryController extends Controller
 
         }
         $this->category->save();
+        CategoryCacheService::clearCache();
         return back()->with('success', 'Category has been updated successfully!');
     }
 

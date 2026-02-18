@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,5 +60,63 @@ class UserController extends Controller
         }
 
         return view('client.user.order-details', compact('order'));
+    }
+
+    /**
+     * Display list of all users (Admin)
+     */
+    public function manageUsers(Request $request)
+    {
+        $query = User::query();
+
+        // Search functionality
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%");
+            });
+        }
+
+        // Filter by role
+        if ($request->has('role') && $request->role != '') {
+            $query->where('role', $request->role);
+        }
+
+        $users = $query->latest('created_at')->get();
+
+        return view('admin.manage-users.manage-users', [
+            'users' => $users,
+        ]);
+    }
+
+    /**
+     * View user details (Admin)
+     */
+    public function viewUser($id)
+    {
+        $user = User::findOrFail($id);
+        $orders = Order::where('user_id', $id)->latest('created_at')->get();
+
+        return view('admin.manage-users.view-user', [
+            'user' => $user,
+            'orders' => $orders,
+        ]);
+    }
+
+    /**
+     * Delete user
+     */
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Prevent deleting yourself
+        if ($user->id === Auth::id()) {
+            return redirect()->back()->with('error', 'You cannot delete your own account!');
+        }
+
+        $user->delete();
+        return redirect()->back()->with('success', 'User deleted successfully!');
     }
 }

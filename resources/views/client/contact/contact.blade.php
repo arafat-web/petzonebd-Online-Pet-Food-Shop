@@ -39,8 +39,8 @@
                     </div>
                     <h3 style="color: var(--ink); font-weight: 600; margin-bottom: 0.5rem;">Address</h3>
                     <p style="color: #666; line-height: 1.6; margin: 0;">
-                        Pet Zone Bangladesh<br>
-                        Dhaka, Bangladesh
+                        {{ setting('site_name', 'Pet Zone') }}<br>
+                        {{ setting('store_address', 'Dhaka, Bangladesh') }}
                     </p>
                 </div>
 
@@ -51,7 +51,7 @@
                     </div>
                     <h3 style="color: var(--ink); font-weight: 600; margin-bottom: 0.5rem;">Phone</h3>
                     <p style="color: #666; margin: 0;">
-                        <a href="tel:+8801700000000" style="color: var(--accent); text-decoration: none; font-weight: 500;">+880 1700-000000</a>
+                        <a href="tel:{{ str_replace(['+', ' ', '-'], '', setting('contact_phone', '+88017000000')) }}" style="color: var(--accent); text-decoration: none; font-weight: 500;">{{ setting('contact_phone', '+880 1700-000000') }}</a>
                     </p>
                     <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; margin-bottom: 0;">Mon–Sat: 9am – 6pm</p>
                 </div>
@@ -63,7 +63,7 @@
                     </div>
                     <h3 style="color: var(--ink); font-weight: 600; margin-bottom: 0.5rem;">Email</h3>
                     <p style="color: #666; margin: 0;">
-                        <a href="mailto:hello@petzone.com" style="color: var(--accent); text-decoration: none; font-weight: 500;">hello@petzone.com</a>
+                        <a href="mailto:{{ setting('contact_email', 'hello@petzone.com') }}" style="color: var(--accent); text-decoration: none; font-weight: 500;">{{ setting('contact_email', 'hello@petzone.com') }}</a>
                     </p>
                     <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem; margin-bottom: 0;">We'll reply within 24 hours</p>
                 </div>

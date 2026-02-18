@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Setting;
 
 class ContactController extends Controller
 {
@@ -34,6 +35,7 @@ class ContactController extends Controller
         // TODO: Save to database or send email
         // For now, just display success message
         // You can later integrate with Mailer or database storage
+        // Can use Setting::get('contact_email') to get dynamic email
 
         return redirect()->route('contact.show')
             ->with('success', 'Thank you for your message! We will get back to you soon.');
