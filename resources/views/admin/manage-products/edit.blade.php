@@ -1,16 +1,16 @@
 @extends('admin.master')
 @php
-    $page = 'add-product'
+    $page = 'manage-products'
 @endphp
 @section('title')
-    Add Product
+    Edit Product
 @endsection
 
 @section('content')
 <div class="admin-page-header">
     <div>
-        <h1 class="admin-page-title">Add New Product</h1>
-        <p class="admin-page-subtitle">Create and configure a new product in your store</p>
+        <h1 class="admin-page-title">Edit Product</h1>
+        <p class="admin-page-subtitle">Update product information and settings</p>
     </div>
     <div class="admin-page-actions">
         <a href="{{ route('manage.products') }}" class="btn btn-outline-secondary">
@@ -42,8 +42,9 @@
                 <h5 class="mb-2 mt-3">Product Information</h5>
             </div>
             <div class="admin-card-body">
-                <form action="{{route('save.product')}}" method="post" enctype="multipart/form-data" class="admin-form">
+                <form action="{{route('update.product')}}" method="post" enctype="multipart/form-data" class="admin-form">
                     @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
 
                     <div class="product-form-sections">
                         <!-- Basic Info Section -->
@@ -64,7 +65,7 @@
                                                class="form-control @error('name') is-invalid @enderror" 
                                                id="name" 
                                                name="name" 
-                                               value="{{ old('name') }}"
+                                               value="{{ old('name', $product->name) }}"
                                                placeholder="e.g., Premium Dog Food"
                                                required>
                                         @error('name')
@@ -82,7 +83,7 @@
                                                class="form-control @error('price') is-invalid @enderror" 
                                                id="price" 
                                                name="price" 
-                                               value="{{ old('price') }}"
+                                               value="{{ old('price', $product->price) }}"
                                                placeholder="0.00"
                                                step="0.01"
                                                required>
@@ -101,7 +102,7 @@
                                                class="form-control @error('brand') is-invalid @enderror" 
                                                id="brand" 
                                                name="brand" 
-                                               value="{{ old('brand') }}"
+                                               value="{{ old('brand', $product->brand) }}"
                                                placeholder="e.g., Royal Canin"
                                                required>
                                         @error('brand')
@@ -119,9 +120,9 @@
                                                 id="category" 
                                                 name="category" 
                                                 required>
-                                            <option value="" disabled selected>Choose a category</option>
+                                            <option value="" disabled>Choose a category</option>
                                             @foreach($categories as $category)
-                                                <option value="{{$category->id}}" {{ old('category') == $category->id ? 'selected' : '' }}>
+                                                <option value="{{$category->id}}" {{ old('category', $product->cat_id) == $category->id ? 'selected' : '' }}>
                                                     {{$category->name}}
                                                 </option>
                                             @endforeach
@@ -151,7 +152,7 @@
                                                class="form-control @error('discount_price') is-invalid @enderror" 
                                                id="discount_price" 
                                                name="discount_price" 
-                                               value="{{ old('discount_price') }}"
+                                               value="{{ old('discount_price', $product->discount_price) }}"
                                                placeholder="Leave empty if no discount"
                                                step="0.01"
                                                min="0">
@@ -195,7 +196,7 @@
                                               id="description" 
                                               name="description" 
                                               rows="6"
-                                              placeholder="Describe your product in detail...">{{ old('description') }}</textarea>
+                                              placeholder="Describe your product in detail...">{{ old('description', $product->description) }}</textarea>
                                     @error('description')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
@@ -213,7 +214,6 @@
                                 <div class="form-group">
                                     <label for="image" class="form-label">
                                         Select Image
-                                        <span class="text-danger">*</span>
                                     </label>
                                     <div class="image-upload-wrapper">
                                         <input type="file" 
@@ -221,14 +221,22 @@
                                                id="image" 
                                                name="image"
                                                accept="image/*"
-                                               onchange="previewImage(event)"
-                                               required>
+                                               onchange="previewImage(event)">
+                                        <small class="form-text text-muted d-block mt-2">Leave empty to keep current image</small>
                                         @error('image')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    
+                                    @if($product->image)
+                                        <div style="margin-top: 1.5rem;">
+                                            <p class="form-text text-muted mb-2">Current Image:</p>
+                                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" style="max-width: 250px; max-height: 250px; border-radius: 0.5rem; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                        </div>
+                                    @endif
+
                                     <div id="imagePreview" style="margin-top: 1.5rem; display: none;">
-                                        <p class="form-text text-muted mb-2">Preview:</p>
+                                        <p class="form-text text-muted mb-2">New Preview:</p>
                                         <img id="previewImg" src="" alt="Preview" style="max-width: 250px; max-height: 250px; border-radius: 0.5rem; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                                     </div>
                                 </div>
@@ -239,10 +247,7 @@
                     <!-- Form Actions -->
                     <div class="form-actions-card">
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-check-lg"></i> Add Product
-                        </button>
-                        <button type="reset" class="btn btn-outline-secondary">
-                            <i class="bi bi-arrow-counterclockwise"></i> Reset
+                            <i class="bi bi-check-lg"></i> Update Product
                         </button>
                         <a href="{{ route('manage.products') }}" class="btn btn-outline-danger ms-auto">
                             <i class="bi bi-x-lg"></i> Cancel
@@ -255,32 +260,6 @@
 </div>
 
 <style>
-.admin-page-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-}
-
-.admin-page-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 0.25rem;
-    letter-spacing: 1px;
-}
-
-.admin-page-subtitle {
-    color: var(--gray-500);
-    font-size: 0.95rem;
-}
-
-.admin-page-actions {
-    display: flex;
-    gap: 0.75rem;
-}
-
 .admin-form {
     margin: 0;
 }
@@ -424,17 +403,6 @@ textarea.form-control {
     gap: 0.5rem;
 }
 
-.btn {
-    border-radius: 0.5rem;
-    padding: 0.625rem 1.5rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
 .btn-primary {
     background-color: var(--accent);
     border-color: var(--accent);
@@ -463,7 +431,6 @@ textarea.form-control {
 .btn-outline-danger {
     color: #dc3545;
     border-color: #dc3545;
-    background-color: white;
 }
 
 .btn-outline-danger:hover {
@@ -507,10 +474,6 @@ textarea.form-control {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
-    }
-
-    .admin-page-title {
-        font-size: 1.5rem;
     }
 
     .form-fields-grid {
