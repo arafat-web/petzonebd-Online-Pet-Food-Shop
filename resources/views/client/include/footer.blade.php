@@ -57,9 +57,9 @@
             <div class="col-6 col-lg-2">
                 <div class="footer-heading">Contact</div>
                 <ul class="footer-links">
-                    <li><a href="#">Dhaka, Bangladesh</a></li>
-                    <li><a href="tel:+8801700000000">+880 1700-000000</a></li>
-                    <li><a href="mailto:hello@petzone.com">hello@petzone.com</a></li>
+                    <li><a href="#">{{ setting('store_address', 'Dhaka, Bangladesh') }}</a></li>
+                    <li><a href="tel:{{ str_replace('+', '', setting('contact_phone', '+8801700000000')) }}">{{ setting('contact_phone', '+880 1700-000000') }}</a></li>
+                    <li><a href="mailto:{{ setting('contact_email', 'hello@petzone.com') }}">{{ setting('contact_email', 'hello@petzone.com') }}</a></li>
                     <li style="margin-top:.75rem; color:rgba(250,247,242,.3); font-size:.75rem;">Mon–Sat: 9am – 6pm</li>
                 </ul>
             </div>
