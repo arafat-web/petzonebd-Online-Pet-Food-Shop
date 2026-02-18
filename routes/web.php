@@ -5,10 +5,13 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 /*
@@ -26,6 +29,7 @@ use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
 Route::get('/', [ClientController::class, 'index'])->name('index');
 Route::get('/product/{category}/{product}', [ClientController::class, 'product'])->name('product');
 Route::get('/products/{category}', [ClientController::class, 'allProduct'])->name('products');
+Route::get('/search', [ClientController::class, 'search'])->name('search');
 
 // Contact
 Route::get('contact', [ContactController::class, 'show'])->name('contact.show');
@@ -91,6 +95,26 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::get('/add-product', [ProductController::class, 'addProduct'])->name('add.product');
     Route::post('/save-product', [ProductController::class, 'saveProduct'])->name('save.product');
     Route::get('/manage-products', [ProductController::class, 'manageProduct'])->name('manage.products');
+    Route::get('/edit-product/{id}', [ProductController::class, 'editProduct'])->name('edit.product');
+    Route::post('/update-product', [ProductController::class, 'updateProduct'])->name('update.product');
     Route::get('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('delete.product');
+
+    Route::get('/manage-orders', [OrderController::class, 'manageOrder'])->name('manage.orders');
+    Route::get('/view-order/{id}', [OrderController::class, 'viewOrder'])->name('view.order');
+    Route::post('/update-order-status/{id}', [OrderController::class, 'updateStatus'])->name('update.order.status');
+    Route::post('/add-order-notes/{id}', [OrderController::class, 'addNotes'])->name('add.order.notes');
+
+    Route::get('/sales', [SalesController::class, 'index'])->name('sales');
+    Route::get('/sales/export-excel', [SalesController::class, 'exportAnalyticsExcel'])->name('sales.export.excel');
+    Route::get('/sales/export-pdf', [SalesController::class, 'exportAnalyticsPDF'])->name('sales.export.pdf');
+    Route::get('/sales/export-orders-excel', [SalesController::class, 'exportOrdersExcel'])->name('sales.export.orders');
+
+    Route::get('/manage-users', [UserController::class, 'manageUsers'])->name('manage.users');
+    Route::get('/view-user/{id}', [UserController::class, 'viewUser'])->name('view.user');
+    Route::get('/delete-user/{id}', [UserController::class, 'deleteUser'])->name('delete.user');
+
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
+    Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
     Route::post('/admin-logout', [AdminAuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 });

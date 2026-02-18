@@ -18,6 +18,12 @@ class Category extends Model
         return 'slug';
     }
 
+    // Relationship to products
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'cat_id');
+    }
+
     public static function saveCategory($request){
         self::$category = new Category();
         self::$category->name = $request->cat_name;
