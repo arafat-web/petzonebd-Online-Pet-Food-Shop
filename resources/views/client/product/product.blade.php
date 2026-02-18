@@ -90,7 +90,11 @@
                             
                             <div class="mb-3 pb-3 pb-md-4" style="border-bottom: 2px solid rgba(0,0,0,0.06);">
                                 <div style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 8vw, 3rem); color: var(--accent); line-height: 1;">
-                                    ৳{{$products->price}}
+                                    ৳{{ $products->getDisplayPrice() }}
+                                    @if($products->hasDiscount())
+                                        <span style="font-size: 0.5em; text-decoration: line-through; color: #999; margin-left: 1rem; display: inline-block;">৳{{ $products->price }}</span>
+                                        <span style="font-size: 0.4em; background: var(--accent); color: white; padding: 0.3rem 0.6rem; border-radius: 4px; margin-left: 1rem; display: inline-block;">-{{ $products->getDiscountPercentage() }}% OFF</span>
+                                    @endif
                                 </div>
                                 <div style="color: #999; font-size: 0.8rem; margin-top: 0.25rem;">
                                     <i class="bi bi-info-circle me-1"></i> Tax included. Shipping calculated at checkout.
@@ -109,7 +113,7 @@
                                 @csrf
                                 <input type="hidden" value="{{ $products->id }}" name="id">
                                 <input type="hidden" value="{{ $products->name }}" name="name">
-                                <input type="hidden" value="{{ $products->price }}" name="price">
+                                <input type="hidden" value="{{ $products->getDisplayPrice() }}" name="price">
                                 <input type="hidden" value="{{ $products->image }}" name="image">
                                 
                                 <div class="d-flex flex-column flex-sm-row gap-3 align-items-stretch align-items-sm-center">
@@ -190,6 +194,11 @@
                                 <a href="{{route('product', [$food->category, $food])}}">
                                     <img src="@image($food->image)" alt="{{$food->name}}">
                                 </a>
+                                @if($food->hasDiscount())
+                                    <span class="product-tag" style="background: var(--accent);">-{{ $food->getDiscountPercentage() }}%</span>
+                                @else
+                                    <span class="product-tag">In Stock</span>
+                                @endif
                                 <div class="product-wishlist" onclick="toggleWishlist(this)">
                                     <i class="bi bi-heart"></i>
                                 </div>
@@ -213,14 +222,17 @@
                                 
                                 <div class="product-footer">
                                     <div class="product-price">
-                                        ৳{{$food->price}}
+                                        ৳{{ $food->getDisplayPrice() }}
+                                        @if($food->hasDiscount())
+                                            <span class="product-price-old">৳{{ $food->price }}</span>
+                                        @endif
                                     </div>
                                     
                                     <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" value="{{ $food->id }}" name="id">
                                         <input type="hidden" value="{{ $food->name }}" name="name">
-                                        <input type="hidden" value="{{ $food->price }}" name="price">
+                                        <input type="hidden" value="{{ $food->getDisplayPrice() }}" name="price">
                                         <input type="hidden" value="{{ $food->image }}" name="image">
                                         <input type="hidden" value="1" name="quantity">
                                         <button type="submit" class="btn-add-cart">

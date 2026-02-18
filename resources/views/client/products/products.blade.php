@@ -52,10 +52,14 @@
                                 <a href="{{route('product',[$foods->category, $foods])}}">
                                     <img src="@image($foods->image)" alt="{{$foods->name}}">
                                 </a>
+                                @if($foods->hasDiscount())
+                                    <span class="product-tag" style="background: var(--accent);">-{{ $foods->getDiscountPercentage() }}%</span>
+                                @else
+                                    <span class="product-tag">In Stock</span>
+                                @endif
                                 <div class="product-wishlist" onclick="toggleWishlist(this)">
                                     <i class="bi bi-heart"></i>
                                 </div>
-                                <span class="product-tag">In Stock</span>
                             </div>
                             
                             <div class="product-body">
@@ -76,14 +80,17 @@
                                 
                                 <div class="product-footer">
                                     <div class="product-price">
-                                        ৳{{$foods->price}}
+                                        ৳{{ $foods->getDisplayPrice() }}
+                                        @if($foods->hasDiscount())
+                                            <span class="product-price-old">৳{{ $foods->price }}</span>
+                                        @endif
                                     </div>
                                     
                                     <form action="{{ route('cart.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" value="{{ $foods->id }}" name="id">
                                         <input type="hidden" value="{{ $foods->name }}" name="name">
-                                        <input type="hidden" value="{{ $foods->price }}" name="price">
+                                        <input type="hidden" value="{{ $foods->getDisplayPrice() }}" name="price">
                                         <input type="hidden" value="{{ $foods->image }}" name="image">
                                         <input type="hidden" value="1" name="quantity">
                                         <button type="submit" class="btn-add-cart">
