@@ -14,83 +14,56 @@ The platform is designed to scale with your business, supporting multiple produc
 
 ## Technology Stack
 
-### Backend
-- **Framework**: Laravel 9.x (PHP)
-- **Authentication**: Laravel Jetstream & Fortify
-- **Database**: MySQL
-- **ORM**: Eloquent
-- **API**: RESTful architecture with JSON endpoints
+- **Framework**: Laravel 12.x (PHP)
+- **PHP Version**: 8.2+ (Latest stable)
 - **Caching**: Laravel Cache (24-hour category caching)
+- **Server**: Apache/Nginx with PHP 8.2+
 
-### Frontend
-- **CSS Framework**: Bootstrap 5.3.0
-- **UI Components**: Bootstrap Icons
-- **JavaScript**: Vanilla JS with AJAX for real-time features
-- **Templating**: Blade (Laravel's templating engine)
-- **Build Tools**: Vite, Tailwind CSS, PostCSS
 
-### Additional Technologies
-- **Package Manager**: Composer, NPM
-- **Server**: Apache/Nginx (PHP 8+)
-- **Session Management**: Laravel Session Handler
-- **Validation**: Laravel Validation Rules
-- **Mail**: SMTP Integration Ready
 
 ---
 
 ## Core Features
 
 ### Customer Features
-- Product Search: Real-time AJAX search functionality with instant results
-- Product Browsing: Browse products by category with filtering options
+- Real-time AJAX Search: Instant product search with dropdown results
+- Product Browsing: Browse products by category with filtering
 - Product Details: Comprehensive product information with pricing and discounts
-- Shopping Cart: Full-featured shopping cart with quantity adjustments
-- Secure Checkout: Multi-step secure checkout process
-- Order History: View past orders with detailed information
+- Shopping Cart: Full-featured cart with quantity adjustments
+- Secure Checkout: Multi-step checkout with order confirmation
+- Order History: View detailed order information and status
 - User Profile: Manage personal information and account settings
 - Responsive Design: Fully functional on desktop, tablet, and mobile devices
+- Wishlist Ready: Foundation for future wishlist features
+- Product Reviews Ready: Integration points for customer reviews
 
 ### Discount & Pricing
-- Product Discounts: Apply percentage-based discounts to products
+- Product Discounts: Percentage-based discount system
 - Display Pricing: Automatic calculation and display of discounted prices
-- Real-time Pricing: Dynamic price calculation in cart and checkout
+- Real-time Pricing: Dynamic price updates in cart and checkout
+- Discount Badge: Visual indicators on product cards
 
 ### Admin Features
-- Admin Dashboard: Comprehensive overview of business metrics
-- Product Management: Create, read, update, and delete products
-- Category Management: Organize products into categories
+- Admin Dashboard: Comprehensive overview with metrics
+- Product Management: Full CRUD operations for products
+- Category Management: Organize and manage product categories
 - Order Management: View, process, and track customer orders
-- Discount Management: Set and manage product discounts
+- Discount Management: Set and manage product discounts per category basis
 - Settings Management: Configure store settings and preferences
 - User Management: View and manage user accounts
-- Role-Based Controls: Separate admin and customer roles with permissions
+- Role-Based Controls: Separate admin and customer authentication
+- Analytics Ready: Foundation for business metrics and reporting
 
 ### Technical Features
-- Category Caching: Optimized performance with intelligent caching
-- SEO-Friendly URLs: Slug-based routing for better search visibility
+- Category Caching: 24-hour intelligent caching for performance
+- SEO-Friendly URLs: Slug-based routing for search visibility
 - Session Management: Secure user session handling
 - Error Handling: Comprehensive error handling and validation
 - AJAX Features: Real-time search and dynamic content loading
-- Mobile Responsive: Mobile-first responsive design approach
+- Mobile Responsive: Mobile-first responsive design
 - Form Validation: Client and server-side validation
 - Security: CSRF protection, password hashing, input sanitization
-
----
-
-## User Interface
-
-### Dark Theme Design
-- Modern dark color scheme for reduced eye strain
-- Accent colors (orange) for call-to-action elements
-- Consistent spacing and typography throughout
-- Custom color variables for easy theme customization
-
-### Navigation
-- Sticky navbar for quick access to navigation
-- Category megamenu for browsing all product categories
-- Real-time search bar with dropdown results
-- User account menu with quick links
-- Mobile-responsive hamburger menu
+- Pagination: Efficient data loading with pagination
 
 ---
 
@@ -99,45 +72,46 @@ The platform is designed to scale with your business, supporting multiple produc
 ### Homepage
 ![PetZoneBD Homepage](screenshots/petzonebd-online-pet-food-shop-test.png)
 
-The main landing page featuring featured products, category navigation, and shopping cart access.
+Main landing page featuring product showcase, category navigation, and promotional content.
 
 ### Product Category Browsing
 ![Product Category Page](screenshots/petzonebd-online-pet-food-shop-test-products-cat-food.png)
 
-Browse products within specific categories with product cards showing images, prices, discounts, and quick add-to-cart buttons.
+Category page showing products with images, prices, discounts, and quick add-to-cart.
 
 ### Shopping Cart
 ![Shopping Cart](screenshots/petzonebd-online-pet-food-shop-test-cart.png)
 
-View all items in the shopping cart with quantity adjustments, price calculation, and checkout options.
+Shopping cart interface with quantity adjustments, total calculation, and checkout.
 
 ### Checkout Process
 ![Checkout Page](screenshots/petzonebd-online-pet-food-shop-test-checkout.png)
 
-Secure checkout interface with delivery information, payment options, and order summary.
+Secure checkout page with delivery info, order summary, and payment options.
 
 ### Customer Dashboard
 ![Customer Dashboard](screenshots/petzonebd-online-pet-food-shop-test-my-dashboard.png)
 
-Personal customer portal for viewing order history, managing profile, and tracking deliveries.
+Personal dashboard for order history, profile management, and account settings.
 
 ---
 
 ## Installation & Setup
 
 ### Requirements
-- PHP 8.0 or higher
+- PHP 8.2 or higher
 - Composer
-- Node.js & NPM
+- Node.js & NPM (16+)
 - MySQL 5.7 or higher
 - Web server (Apache/Nginx)
+- Git
 
 ### Quick Start
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/petzonebd.git
-cd petzonebd
+git clone https://github.com/arafat-web/petzonebd-Online-Pet-Food-Shop.git
+cd petzonebd-Online-Pet-Food-Shop
 ```
 
 2. Install dependencies
@@ -168,106 +142,159 @@ npm run build
 php artisan serve
 ```
 
-Access the application at `http://localhost:8000`
+Access the application at http://localhost:8000
+
+### Test Credentials
+
+**Admin Panel:**
+- Email: admin@petzone.com
+- Password: admin@123
+
+**Customer Account:**
+- Email: test@petzone.com
+- Password: test@123
 
 ---
 
 ## Project Structure
 
-The codebase is organized following Laravel's standard structure with clear separation of concerns:
-
-- **app**: Application core including controllers, models, and business logic
-- **resources**: Views, stylesheets, and JavaScript files
-- **database**: Migrations and seeders
-- **routes**: Application routes (web, API, console)
-- **public**: Publicly accessible assets and uploads
-- **config**: Configuration files for application services
-
----
-
-## Usage
-
-### For Customers
-1. Browse products by category or use the search functionality
-2. View product details and pricing
-3. Add items to shopping cart
-4. Proceed to checkout
-5. Create an account or login
-6. Complete payment and view order confirmation
-7. Track order status in customer dashboard
-
-### For Administrators
-1. Login to admin dashboard
-2. Manage product catalog (add, edit, delete products)
-3. Organize products into categories
-4. Set product discounts and pricing
-5. Process customer orders
-6. Configure store settings
-7. View sales reports and analytics
-
----
-
-## API Endpoints
-
-### Search API
-- **Endpoint**: `GET /api/search?q=query`
-- **Response**: JSON array of matching products
-- **Used by**: AJAX search functionality
-
----
-
-## Performance Optimizations
-
-- Category caching with 24-hour TTL
-- Lazy loading for product images
-- Efficient database queries with eager loading
-- Minified CSS and JavaScript assets
-- Image optimization for faster load times
-- AJAX for non-blocking dynamic content
-
----
-
-## Security Features
-
-- CSRF token protection on all forms
-- Secure password hashing with bcrypt
-- Input validation and sanitization
-- SQL injection prevention through Eloquent ORM
-- Role-based access control
-- Session timeout protection
-- Secure cookie handling
+```
+petzonebd/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── AdminController.php
+│   │   │   ├── ClientController.php
+│   │   │   ├── CartController.php
+│   │   │   ├── CheckoutController.php
+│   │   │   ├── SearchController.php
+│   │   │   ├── UserController.php
+│   │   │   ├── ProductController.php
+│   │   │   ├── CategoryController.php
+│   │   │   └── OrderController.php
+│   │   ├── Middleware/
+│   │   │   └── IsAdmin.php
+│   │   └── Kernel.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Product.php
+│   │   ├── Category.php
+│   │   ├── Order.php
+│   │   ├── Payment.php
+│   │   └── Settings.php
+│   ├── Providers/
+│   │   ├── AppServiceProvider.php
+│   │   └── RouteServiceProvider.php
+│   ├── Services/
+│   │   └── CategoryCacheService.php
+│   └── Helpers/
+│       └── ImageHelper.php
+├── database/
+│   ├── migrations/
+│   ├── seeders/
+│   └── factories/
+├── resources/
+│   ├── views/
+│   │   ├── admin/
+│   │   │   ├── dashboard/
+│   │   │   ├── products/
+│   │   │   ├── categories/
+│   │   │   ├── orders/
+│   │   │   └── settings/
+│   │   ├── client/
+│   │   │   ├── home/
+│   │   │   ├── products/
+│   │   │   ├── product/
+│   │   │   ├── cart/
+│   │   │   ├── checkout/
+│   │   │   ├── auth/
+│   │   │   └── include/
+│   │   └── layouts/
+│   ├── css/
+│   └── js/
+├── routes/
+│   ├── web.php
+│   ├── api.php
+│   └── console.php
+├── public/
+│   ├── images/
+│   ├── css/
+│   ├── js/
+│   └── index.php
+├── config/
+├── bootstrap/
+├── storage/
+├── tests/
+└── composer.json
+```
 
 ---
 
 ## Future Enhancements
 
-- Payment gateway integration (Stripe, bKash)
-- Email notifications for orders
-- Product reviews and ratings
-- Wishlist functionality
-- Advanced analytics and reporting
-- Inventory management
-- Multiple payment methods
-- Customer email notifications
-- SMS notifications
+- Payment gateway integration (Stripe, bKash, Nagad)
+- Email notifications for orders and updates
+- Product reviews and customer ratings
+- Wishlist and favorites functionality
+- Advanced inventory management
+- Multiple payment methods and installments
+- SMS notifications for order updates
+- Customer loyalty and reward program
+- Product recommendations based on purchase history
+- Admin email reports and analytics
+- Multi-language support
+- Social media integration
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+**Database connection error**
+- Check .env file DATABASE_URL and credentials
+- Ensure MySQL server is running
+- Verify database exists
+
+**Permission denied errors**
+- Run: chmod -R 775 storage bootstrap/cache
+- Ensure web server has write permissions
+
+**Cache issues**
+- Clear cache: php artisan cache:clear
+- Clear config: php artisan config:clear
+- Clear views: php artisan view:clear
+
+**Composer conflicts**
+- Run: composer update
+- Remove composer.lock and run: composer install
 
 ---
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (git checkout -b feature/AmazingFeature)
+3. Commit your changes (git commit -m 'Add AmazingFeature')
+4. Push to the branch (git push origin feature/AmazingFeature)
+5. Open a Pull Request
 
 ---
 
 ## License
 
-This project is open source and available under the MIT License.
+This project is open source and available under the MIT License. See LICENSE file for details.
 
 ---
 
 ## Support
 
-For questions or support, please contact support@petzonebd.com or create an issue on the project repository.
+For questions or support:
+- Email: support@petzonebd.com
+- GitHub Issues: Create an issue on the project repository
+- Documentation: Check docs folder for detailed guides
 
 ---
 
@@ -275,146 +302,7 @@ For questions or support, please contact support@petzonebd.com or create an issu
 
 Built with passion for pet lovers and e-commerce excellence.
 
-**Version**: 2.0 | **Last Updated**: February 2026
-
-## Installation
-
-Please check the official laravel installation guide for server requirements before you start. [Official Documentation](https://laravel.com/docs/9.x)
-
-Clone the repository
-
-    git clone https://github.com/arafat-web/petzonebd.git
-
-Switch to the repo folder
-
-    cd petzonebd
-
-Install all the dependencies using composer
-
-    composer install
-
-Copy the example env file and make the required configuration changes in the .env file
-
-    cp .env.example .env
-
-Generate a new application key
-
-    php artisan key:generate
-
-Run the database migrations (**Set the database connection in .env before migrating**)
-
-    php artisan migrate
-
-Seed the database with sample data
-
-    php artisan db:seed
-
-Start the local development server
-
-    php artisan serve
-
-You can now access the server at http://localhost:8000
-
-### Test Credentials
-
-**Admin Panel:**
-- Email: `admin@petzone.com`
-- Password: `admin@123`
-
-**Customer Account:**
-- Email: `test@petzone.com`
-- Password: `test@123`
-
-# Screenshots
-
-## Home Page
-
-![Home Page](screenshots/petzonebd-online-pet-food-shop-test.png)
-
-## Product Categories
-
-![Products](screenshots/petzonebd-online-pet-food-shop-test-products-cat-food.png)
-
-## Shopping Cart
-
-![Cart](screenshots/petzonebd-online-pet-food-shop-test-cart.png)
-
-## Checkout
-
-![Checkout](screenshots/petzonebd-online-pet-food-shop-test-checkout.png)
-
-## User Dashboard
-
-![User Dashboard](screenshots/petzonebd-online-pet-food-shop-test-my-dashboard.png)
-
-## Color Scheme
-
-The application uses a carefully curated color palette:
-
-- **Cream**: #FAF7F2 - Primary background
-- **Ink**: #2E2E2C - Text and dark elements
-- **Accent**: #E8521A - CTAs and highlights
-- **Sage**: #4A6741 - Secondary accents
-- **Sand**: #C4B5A0 - Neutral elements
-
-## Project Structure
-
-```
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── Auth/
-│   │   │   ├── AdminController.php
-│   │   │   ├── ClientController.php
-│   │   │   ├── CartController.php
-│   │   │   ├── CheckoutController.php
-│   │   │   └── UserController.php
-│   │   └── Middleware/
-│   │       └── IsAdmin.php
-│   └── Models/
-│       ├── User.php
-│       ├── Product.php
-│       ├── Category.php
-│       ├── Order.php
-│       └── OrderItem.php
-├── database/
-│   ├── migrations/
-│   └── seeders/
-├── resources/
-│   └── views/
-│       ├── admin/
-│       ├── client/
-│       └── layouts/
-├── routes/
-│   └── web.php
-└── public/
-    └── css/
-        └── style.css
-```
-
-## Database Schema
-
-The application includes the following main tables:
-
-- **users** - Customer and admin accounts
-- **products** - Product catalog
-- **categories** - Product categories
-- **orders** - Customer orders
-- **order_items** - Order line items
-- **payments** - Payment records
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is open-sourced software licensed under the [MIT License](LICENSE).
-
-## Support
-
-For support, please open an issue on GitHub.
-
- <hr>
-
- # Thanks
+**Version**: 3.0 (Laravel 12)
+**Last Updated**: February 2026
+**Maintainer**: Arafat Hossain
+**License**: MIT
