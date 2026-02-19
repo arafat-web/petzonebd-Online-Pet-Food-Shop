@@ -19,8 +19,6 @@ The platform is designed to scale with your business, supporting multiple produc
 - **Caching**: Laravel Cache (24-hour category caching)
 - **Server**: Apache/Nginx with PHP 8.2+
 
-
-
 ---
 
 ## Core Features
@@ -53,19 +51,6 @@ The platform is designed to scale with your business, supporting multiple produc
 - User Management: View and manage user accounts
 - Role-Based Controls: Separate admin and customer authentication
 - Analytics Ready: Foundation for business metrics and reporting
-
-### Technical Features
-- Category Caching: 24-hour intelligent caching for performance
-- SEO-Friendly URLs: Slug-based routing for search visibility
-- Session Management: Secure user session handling
-- Error Handling: Comprehensive error handling and validation
-- AJAX Features: Real-time search and dynamic content loading
-- Mobile Responsive: Mobile-first responsive design
-- Form Validation: Client and server-side validation
-- Security: CSRF protection, password hashing, input sanitization
-- Pagination: Efficient data loading with pagination
-
----
 
 ## Screenshots
 
@@ -156,80 +141,6 @@ Access the application at http://localhost:8000
 
 ---
 
-## Project Structure
-
-```
-petzonebd/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── AdminController.php
-│   │   │   ├── ClientController.php
-│   │   │   ├── CartController.php
-│   │   │   ├── CheckoutController.php
-│   │   │   ├── SearchController.php
-│   │   │   ├── UserController.php
-│   │   │   ├── ProductController.php
-│   │   │   ├── CategoryController.php
-│   │   │   └── OrderController.php
-│   │   ├── Middleware/
-│   │   │   └── IsAdmin.php
-│   │   └── Kernel.php
-│   ├── Models/
-│   │   ├── User.php
-│   │   ├── Product.php
-│   │   ├── Category.php
-│   │   ├── Order.php
-│   │   ├── Payment.php
-│   │   └── Settings.php
-│   ├── Providers/
-│   │   ├── AppServiceProvider.php
-│   │   └── RouteServiceProvider.php
-│   ├── Services/
-│   │   └── CategoryCacheService.php
-│   └── Helpers/
-│       └── ImageHelper.php
-├── database/
-│   ├── migrations/
-│   ├── seeders/
-│   └── factories/
-├── resources/
-│   ├── views/
-│   │   ├── admin/
-│   │   │   ├── dashboard/
-│   │   │   ├── products/
-│   │   │   ├── categories/
-│   │   │   ├── orders/
-│   │   │   └── settings/
-│   │   ├── client/
-│   │   │   ├── home/
-│   │   │   ├── products/
-│   │   │   ├── product/
-│   │   │   ├── cart/
-│   │   │   ├── checkout/
-│   │   │   ├── auth/
-│   │   │   └── include/
-│   │   └── layouts/
-│   ├── css/
-│   └── js/
-├── routes/
-│   ├── web.php
-│   ├── api.php
-│   └── console.php
-├── public/
-│   ├── images/
-│   ├── css/
-│   ├── js/
-│   └── index.php
-├── config/
-├── bootstrap/
-├── storage/
-├── tests/
-└── composer.json
-```
-
----
-
 ## Future Enhancements
 
 - Payment gateway integration (Stripe, bKash, Nagad)
@@ -244,30 +155,6 @@ petzonebd/
 - Admin email reports and analytics
 - Multi-language support
 - Social media integration
-
----
-
-## Troubleshooting
-
-### Common Issues
-
-**Database connection error**
-- Check .env file DATABASE_URL and credentials
-- Ensure MySQL server is running
-- Verify database exists
-
-**Permission denied errors**
-- Run: chmod -R 775 storage bootstrap/cache
-- Ensure web server has write permissions
-
-**Cache issues**
-- Clear cache: php artisan cache:clear
-- Clear config: php artisan config:clear
-- Clear views: php artisan view:clear
-
-**Composer conflicts**
-- Run: composer update
-- Remove composer.lock and run: composer install
 
 ---
 
